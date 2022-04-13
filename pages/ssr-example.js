@@ -1,8 +1,21 @@
 import Head from 'next/head'
 import cubejs from '@cubejs-client/core'
 import styles from '../styles/Home.module.css'
+import { stackedChartData } from '../util';
+import LineChart from '../components/LineChart';
+import { useState, useEffect } from 'react';
 
 export default function SSRCube({ data, error }) {
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (data) {
+      process.nextTick(() => {
+        setLoading(false);
+      });
+    }
+  } , [data]);
+
   return (
     <div className={styles.container}>
       <Head>
@@ -10,14 +23,12 @@ export default function SSRCube({ data, error }) {
         <meta name="description" content="SSR Example With Cube" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div>{JSON.stringify(data)}</div>
+      <LineChart data={data} />
     </div>
   )
 }
 
 export async function getServerSideProps(context) {
-  let error = null;
-
   const cubejsApi = cubejs(
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDk5NDMwNjN9.dlHB-K3VLwc4gcEuC7SDYCrWE7_pgunm55WMGeRrWMc",
     {
@@ -55,18 +66,3 @@ export async function getServerSideProps(context) {
     }
   }
 }
-
-
-const stackedChartData = (resultSet) => {
-  const data = resultSet
-    .pivot()
-    .map(({ xValues, yValuesArray }) =>
-      yValuesArray.map(([yValues, m]) => ({
-        x: resultSet.axisValuesString(xValues, ", "),
-        color: resultSet.axisValuesString(yValues, ", "),
-        measure: m && Number.parseFloat(m)
-      }))
-    )
-    .reduce((a, b) => a.concat(b), []);
-  return data;
-};

@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react';
 import cubejs from "@cubejs-client/core";
 import Flatpickr from "react-flatpickr";
-import Dashboard from '../components/Dashboard'
+import LineChart from '../components/LineChart'
 import { stackedChartData } from '../util';
-
-
+import Link from 'next/link';
 import styles from '../styles/Home.module.css';
 
 
@@ -53,9 +52,14 @@ export default function Home() {
     return <div>Error: {error.message}</div>
   }
 
+  if(!data) {
+    return <div>Loading...</div>
+  }
+
   return (
     <div className={styles.container}>
-      <h1>Client Rendered Chart Example</h1>
+      <h1>Client Rendered Charts Example</h1>
+      <h5>Select a date range</h5>
       <Flatpickr
         options={{ 
           allowInput: true, 
@@ -73,7 +77,12 @@ export default function Home() {
           }
         }}
       />
-      <Dashboard data={data}/>
+      <LineChart data={data}/>
+      <div className={styles.p}>
+        <Link href="/ssr-example">
+          <a className={styles.card}>View SSR Example</a>
+        </Link>
+      </div>
     </div>
   )
 }

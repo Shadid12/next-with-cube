@@ -1,11 +1,6 @@
 import { Chart, Axis, Tooltip, Geom } from "bizcharts"
 
-export default function Dashboard({data}) {
-
-  if(!data) { 
-    return <div>Loading...</div>
-  }
-
+export default function LineChart({data}) {
   return (
     <Chart
       scale={{
