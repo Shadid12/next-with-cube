@@ -9,8 +9,13 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@cubejs-client/react": "^0.29.43",
+    "antd": "^4.19.5",
+    "bizcharts": "^4.1.15",
+    "chartjs": "^0.3.24",
     "next": "12.1.5",
     "react": "18.0.0",
+    "react-chartjs-2": "^4.1.0",
     "react-dom": "18.0.0"
   },
   "devDependencies": {
