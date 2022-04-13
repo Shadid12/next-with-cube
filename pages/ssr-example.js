@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import cubejs from "@cubejs-client/core";
+import cubejs from '@cubejs-client/core'
 import styles from '../styles/Home.module.css'
 
 export default function SSRCube({ data, error }) {

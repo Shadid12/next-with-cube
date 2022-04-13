@@ -13,10 +13,13 @@
     "antd": "^4.19.5",
     "bizcharts": "^4.1.15",
     "chartjs": "^0.3.24",
+    "flatpickr": "^4.6.11",
     "next": "12.1.5",
     "react": "18.0.0",
     "react-chartjs-2": "^4.1.0",
-    "react-dom": "18.0.0"
+    "react-date-range": "^1.4.0",
+    "react-dom": "18.0.0",
+    "react-flatpickr": "^3.10.11"
   },
   "devDependencies": {
     "eslint": "8.13.0",
