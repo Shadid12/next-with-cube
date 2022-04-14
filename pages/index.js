@@ -58,6 +58,11 @@ export default function Home() {
 
   return (
     <div className={styles.container}>
+      
+      <Link href={`/ssr-example?startDate=2017-08-02&endDate=2018-10-31`}>
+        <a className={styles.link}>View SSR Example</a>
+      </Link>
+
       <h1>Client Rendered Charts Example</h1>
       <h5>Select a date range</h5>
       <Flatpickr
@@ -78,11 +83,6 @@ export default function Home() {
         }}
       />
       <LineChart data={data}/>
-      <div className={styles.p}>
-        <Link href="/ssr-example">
-          <a className={styles.card}>View SSR Example</a>
-        </Link>
-      </div>
     </div>
   )
 }
