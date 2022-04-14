@@ -5,6 +5,7 @@ import LineChart from '../components/LineChart'
 import { stackedChartData } from '../util';
 import Link from 'next/link';
 import styles from '../styles/Home.module.css';
+import BarChart from '../components/BarChart';
 
 
 const cubejsApi = cubejs(
@@ -18,10 +19,11 @@ const cubejsApi = cubejs(
 export default function Home() {
 
   const [data, setData] = useState(null);
+  const [barChartData, setBarChartData] = useState(null);
   const [error, setError] = useState (null);
   const [dateRange, setDateRange] = useState({
     startDate: '2017-08-02',
-    endDate: '2018-10-31'
+    endDate: '2018-01-31'
   });
 
   useEffect(() => {
@@ -46,20 +48,42 @@ export default function Home() {
       .catch((error) => {
         setError(error);
       })
+
+    cubejsApi
+      .load({
+        measures: ["Orders.count"],
+        timeDimensions: [
+          {
+            dimension: "Orders.createdAt",
+            dateRange: [dateRange.startDate, dateRange.endDate]
+          }
+        ],
+        order: {
+          "Orders.count": "desc"
+        },
+        dimensions: ["Suppliers.company"],
+        "filters": []
+      })
+      .then((resultSet) => {
+        setBarChartData(stackedChartData(resultSet));
+      })
+      .catch((error) => {
+        setError(error);
+      })
   }
 
   if(error) {
     return <div>Error: {error.message}</div>
   }
 
-  if(!data) {
+  if(!data || !barChartData) {
     return <div>Loading...</div>
   }
 
   return (
     <div className={styles.container}>
       
-      <Link href={`/ssr-example?startDate=2017-08-02&endDate=2018-10-31`}>
+      <Link href={`/ssr-example?startDate=2017-08-02&endDate=2018-01-31`}>
         <a className={styles.link}>View SSR Example</a>
       </Link>
 
@@ -82,7 +106,20 @@ export default function Home() {
           }
         }}
       />
+
+      <h3>Order count timeseries</h3>
       <LineChart data={data}/>
+
+      <h3>Order count by Suppliers</h3>
+      <BarChart 
+        data={barChartData} 
+        pivotConfig={{
+          x: ["Suppliers.company"],
+          y: ["measures"],
+          fillMissingDates: true,
+          joinDateRange: false
+        }}
+      />
     </div>
   )
 }
