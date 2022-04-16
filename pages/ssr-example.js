@@ -6,9 +6,13 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import BarChart from '../components/BarChart';
 import TableRenderer from '../components/Table';
+import Flatpickr from "react-flatpickr";
+import { useRouter } from 'next/router';
 
 export default function SSRCube({ data, barChartData, error }) {
   const [_, setLoading] = useState(true);
+  const router = useRouter();
+  const { startDate, endDate } = router.query;
 
   useEffect(() => {
     if (data) {
@@ -24,15 +28,28 @@ export default function SSRCube({ data, barChartData, error }) {
         <a className={styles.link}>Client Rendered Example</a>
       </Link>
       <h1>SSR Charts Example</h1>
-      <p>You can change the 
-        <code> startDate </code>and <code> endDate </code> 
-        in the <b>url</b> bar to see the charts change. 
-      </p>
+      
+      <h5>🗓️ Select a date range</h5>
 
-      <h3>Order count timeseries</h3>
+      <Flatpickr
+        options={{ 
+          allowInput: true, 
+          mode: "range", 
+          minDate: new Date('2016-12-12'),
+          maxDate: new Date('2020-12-12') 
+        }}
+        value={[startDate, endDate]}
+        onChange={(selectedDates) => {
+          if (selectedDates.length === 2) {
+            router.push(`/ssr-example?startDate=${selectedDates[0]}&endDate=${selectedDates[1]}`);
+          }
+        }}
+      />
+
+      <h3>📈 Order count timeseries</h3>
       <LineChart data={data} />
 
-      <h3>Order count by Suppliers</h3>
+      <h3>📊 Order count by Suppliers</h3>
       <BarChart 
         data={barChartData} 
         pivotConfig={{
