@@ -10,11 +10,8 @@ import TableRenderer from '../components/Table';
 
 
 const cubejsApi = cubejs(
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDk5OTY3ODZ9.u084n-rsB8Ablulc-o6Axzcp0WMpz2QWMo__xzWLx3I",
-  {
-    apiUrl:
-      "https://comparative-guineafowl.gcp-us-central1.cubecloudapp.dev/cubejs-api/v1"
-  }
+  process.env.NEXT_PUBLIC_CUBEJS_TOKEN,
+  { apiUrl: process.env.NEXT_PUBLIC_CUBEJS_API_URL }
 );
 
 export default function Home() {

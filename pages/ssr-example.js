@@ -52,12 +52,8 @@ export default function SSRCube({ data, barChartData, error }) {
 
 export async function getServerSideProps({ query }) {
   const cubejsApi = cubejs(
-    
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2NDk5NTQ0Njl9.7lXwUnQhZKqzJ1r8QX3aZkLps2UXzWsWWyicpKCWLBM',
-    {
-      apiUrl:
-        "https://comparative-guineafowl.gcp-us-central1.cubecloudapp.dev/cubejs-api/v1"
-    }
+    process.env.NEXT_PUBLIC_CUBEJS_TOKEN,
+    { apiUrl: process.env.NEXT_PUBLIC_CUBEJS_API_URL }
   );
 
   const { startDate, endDate } = query;
