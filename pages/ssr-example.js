@@ -5,6 +5,7 @@ import LineChart from '../components/LineChart';
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import BarChart from '../components/BarChart';
+import TableRenderer from '../components/Table';
 
 export default function SSRCube({ data, barChartData, error }) {
   const [_, setLoading] = useState(true);
@@ -41,13 +42,18 @@ export default function SSRCube({ data, barChartData, error }) {
           joinDateRange: false
         }}
       />
+
+      <h3>📋 Order Table</h3>
+      <TableRenderer data={barChartData} />
+
     </div>
   )
 }
 
 export async function getServerSideProps({ query }) {
   const cubejsApi = cubejs(
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDk5NDMwNjN9.dlHB-K3VLwc4gcEuC7SDYCrWE7_pgunm55WMGeRrWMc",
+    
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2NDk5NTQ0Njl9.7lXwUnQhZKqzJ1r8QX3aZkLps2UXzWsWWyicpKCWLBM',
     {
       apiUrl:
         "https://comparative-guineafowl.gcp-us-central1.cubecloudapp.dev/cubejs-api/v1"

@@ -6,10 +6,11 @@ import { stackedChartData } from '../util';
 import Link from 'next/link';
 import styles from '../styles/Home.module.css';
 import BarChart from '../components/BarChart';
+import TableRenderer from '../components/Table';
 
 
 const cubejsApi = cubejs(
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDk5NDMwNjN9.dlHB-K3VLwc4gcEuC7SDYCrWE7_pgunm55WMGeRrWMc",
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDk5OTY3ODZ9.u084n-rsB8Ablulc-o6Axzcp0WMpz2QWMo__xzWLx3I",
   {
     apiUrl:
       "https://comparative-guineafowl.gcp-us-central1.cubecloudapp.dev/cubejs-api/v1"
@@ -88,7 +89,7 @@ export default function Home() {
       </Link>
 
       <h1>Client Rendered Charts Example</h1>
-      <h5>Select a date range</h5>
+      <h5>🗓️ Select a date range</h5>
       <Flatpickr
         options={{ 
           allowInput: true, 
@@ -106,7 +107,6 @@ export default function Home() {
           }
         }}
       />
-
       <h3>Order count timeseries</h3>
       <LineChart data={data}/>
 
@@ -120,6 +120,10 @@ export default function Home() {
           joinDateRange: false
         }}
       />
+
+      <h3>📋 Order Table</h3>
+      <TableRenderer data={barChartData} />
+
     </div>
   )
 }

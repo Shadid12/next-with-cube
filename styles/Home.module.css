@@ -124,6 +124,11 @@
   border-color: #0070f3;
 }
 
+.chartContainer {
+  display: flex;
+  max-width: 500px;
+}
+
 @media (max-width: 600px) {
   .grid {
     width: 100%;
