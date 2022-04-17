@@ -1,6 +1,6 @@
 import { Chart, Axis, Tooltip, Geom } from "bizcharts"
 
-export default function LineChart({data}) {
+export default function LineChart({ data }) {
   return (
     <Chart
       scale={{
